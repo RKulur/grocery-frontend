@@ -12,15 +12,14 @@ export default function Products() {
   const [products,setProducts] = useState([])
 
   useEffect(()=>{
-    let token = JSON.parse(localStorage.getItem('token'));
-
+    let token = localStorage.getItem('token');
     if(!token){
-      // return new Error('Internal sercer error')
+      return console.log('No token ')
     }
 
     Axios.get('http://localhost:7000/api/user/groceries',{
       headers : {
-        'auth-token' : token
+        'auth-token' : JSON.parse(token)
       }
     }).then((res)=>{
       setProducts(res.data)
@@ -66,7 +65,7 @@ export default function Products() {
                 <img src="" alt={product.image} />
                 <h3>{product.name}</h3>
                 <div className="price">{product.description}</div>
-                <div className="price">{product.price}</div>
+                <div className="price">₹{product.price}</div>
                 <div className="stars">
                   <FontAwesomeIcon icon={faStar} />
                   <FontAwesomeIcon icon={faStar} />
@@ -74,7 +73,9 @@ export default function Products() {
                   <FontAwesomeIcon icon={faStar} />
                   <FontAwesomeIcon icon={faStarHalfAlt} />
                 </div>
-                <button type="button" className="btn">
+                <button onClick={()=>{
+
+                }} type="button" className="btn">
                   add to cart
                 </button>
               </div>

@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShoppingBasket,
   faBars,
   faSearch,
   faShoppingCart,
   faUser,
-} from '@fortawesome/free-solid-svg-icons';
-import SearchForm from './SearchForm';
-import ShoppingCart from './ShoppingCart';
-import UserForm from './UserForm';
-import './Header.css';
-import Navbar from './Navbar';
+  faSignOut
+} from "@fortawesome/free-solid-svg-icons";
+import SearchForm from "./SearchForm";
+import ShoppingCart from "./ShoppingCart";
+import UserForm from "./UserForm";
+import "./Header.css";
+import Navbar from "./Navbar";
 
 export default function Header() {
   const [activeMenu, setActiveMenu] = useState(false);
   const [activeSearch, setActiveSearch] = useState(false);
   const [activeShoppingCart, setActiveShoppingCart] = useState(false);
   const [activeUserForm, setActiveUserForm] = useState(false);
+  const [localStrg, setLocalStrg] = useState(localStorage.getItem("token"));
+  
+
   window.onscroll = () => {
     setActiveUserForm(false);
     setActiveShoppingCart(false);
@@ -58,22 +62,39 @@ export default function Header() {
       </a>
       <Navbar active={activeMenu} />
       <div className="flex  gap-9">
-        <button type="button" id="menu-btn" onClick={handleMenuButton}>
-          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faBars} />
+        {
+          localStrg && (
+            <button type="button" id="cart-btn" onClick={handleShoppingCartButton}>
+          <FontAwesomeIcon
+            className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white"
+            icon={faShoppingCart}
+          />
         </button>
-        <button type="button" id="search-btn" onClick={handleSearchButton}>
-          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faSearch} />
+          )
+        }
+        {localStrg ? (
+          <button type="button" id="user-btn" onClick={()=>{
+            localStorage.removeItem('token')
+            setLocalStrg(false)
+          }}>
+          <FontAwesomeIcon
+            className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white"
+            icon={faSignOut}
+          />
         </button>
-        <button type="button" id="cart-btn" onClick={handleShoppingCartButton}>
-          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faShoppingCart} />
-        </button>
-        <button type="button" id="user-btn" onClick={handleUserFormButton}>
-          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faUser} />
-        </button>
+        ) : (
+          <button type="button" id="user-btn" onClick={handleUserFormButton}>
+            <FontAwesomeIcon
+              className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white"
+              icon={faUser}
+            />
+          </button>
+        )}
       </div>
       <SearchForm active={activeSearch} />
       <ShoppingCart active={activeShoppingCart} />
-      <UserForm active={activeUserForm} />
+
+      <UserForm active={activeUserForm} setActive={setActiveUserForm} setLocalStrg={setLocalStrg}/>
     </header>
   );
 }

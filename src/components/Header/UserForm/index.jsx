@@ -6,9 +6,10 @@ import Axios from "axios";
 import { Link } from "react-router-dom";
 
 export default function UserForm(props) {
-  const { active } = props;
+  const { active, setActive,setLocalStrg } = props;
   const loginEmail = useRef(null);
   const loginPassword = useRef(null);
+
 
   const regName = useRef(null);
   const regPhone = useRef(null);
@@ -18,6 +19,7 @@ export default function UserForm(props) {
   const regPassword = useRef(null);
 
   const [activeCreateUser, setActiveCreateUser] = useState(false);
+  const [error, setError] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -27,8 +29,13 @@ export default function UserForm(props) {
     })
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.authToken));
+        setActive(false)
+        setLocalStrg(true)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err?.response?.data?.message);
+        setError(err?.response?.data?.message);
+      });
   }
 
   function handleCreateUserSubmit(e) {
@@ -40,6 +47,7 @@ export default function UserForm(props) {
     const pinCode = regPinCode.current?.value;
     const email = regEmail.current?.value;
     const password = regPassword.current?.value;
+
     console.log({ name, phone, address, pinCode, email, password });
     Axios.post("http://localhost:7000/api/user/register", {
       name,
@@ -62,6 +70,7 @@ export default function UserForm(props) {
           className={`user-form ${active ? "active" : ""}`}
           onSubmit={handleSubmit}
         >
+          <h2 className="text-2xl font-bold text-red-500">{error}</h2>
           <h3>login now</h3>
           <div className="box">
             <input
