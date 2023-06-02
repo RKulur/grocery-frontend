@@ -7,19 +7,35 @@ import Categories from './components/Categories';
 import Reviews from './components/Reviews';
 import Blogs from './components/Blogs';
 import Footer from './components/Footer';
+import { BrowserRouter as Router,Routes , Route} from 'react-router-dom';
 import './App.css';
 
 function App() {
   return (
     <div className="app">
-      <Header />
-      <Banner />
-      <Features />
-      <Products />
-      <Categories />
-      <Reviews />
-      <Blogs />
-      <Footer />
+      <Router>
+        <Routes>
+          <Route path='/' element={
+            <>
+            <Header />
+            <Banner />
+            <Features />
+            <Products />
+            <Categories />
+            <Reviews />
+            <Blogs />
+            <Footer />
+            </>
+          } />
+        </Routes>
+      </Router>
+      
+      
+      
+      
+      
+      
+      
     </div>
   );
 }

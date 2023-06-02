@@ -57,18 +57,18 @@ export default function Header() {
         RR Veggies
       </a>
       <Navbar active={activeMenu} />
-      <div className="icons">
+      <div className="flex  gap-9">
         <button type="button" id="menu-btn" onClick={handleMenuButton}>
-          <FontAwesomeIcon className="fa-icon" icon={faBars} />
+          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faBars} />
         </button>
         <button type="button" id="search-btn" onClick={handleSearchButton}>
-          <FontAwesomeIcon className="fa-icon" icon={faSearch} />
+          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faSearch} />
         </button>
         <button type="button" id="cart-btn" onClick={handleShoppingCartButton}>
-          <FontAwesomeIcon className="fa-icon" icon={faShoppingCart} />
+          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faShoppingCart} />
         </button>
         <button type="button" id="user-btn" onClick={handleUserFormButton}>
-          <FontAwesomeIcon className="fa-icon" icon={faUser} />
+          <FontAwesomeIcon className="fa-icon h-10 w-10 bg-gray-500 px-6 py-6 rounded-xl text-white" icon={faUser} />
         </button>
       </div>
       <SearchForm active={activeSearch} />
