@@ -30,7 +30,7 @@ export default function UserForm(props) {
       .then((res) => {
         localStorage.setItem("token", JSON.stringify(res.data.authToken));
         setActive(false)
-        setLocalStrg(true)
+        setLocalStrg(false)
       })
       .catch((err) => {
         console.log(err?.response?.data?.message);

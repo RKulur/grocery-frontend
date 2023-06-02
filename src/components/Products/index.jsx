@@ -30,6 +30,20 @@ export default function Products() {
     })
   },[])
 
+  function handleCart(gId){
+    let token = localStorage.getItem('token');
+    console.log(JSON.parse(token))
+    if(!token){
+      return console.log('No token ')
+    }
+    Axios.post(`http://localhost:7000/api/user/insert-cart/${gId}`,{
+      headers : {
+        'auth-token' : token
+      }
+    }).then(res => console.log(res)).catch((err)=>{
+      console.log(err)})
+  }
+
   SwiperCore.use([Autoplay]);
   return (
     <section className="products" id="products">
@@ -74,7 +88,7 @@ export default function Products() {
                   <FontAwesomeIcon icon={faStarHalfAlt} />
                 </div>
                 <button onClick={()=>{
-
+                  handleCart(product._id)
                 }} type="button" className="btn">
                   add to cart
                 </button>
